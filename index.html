@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tailwind untuk Palet Soft Gray & Tipografi -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        graysoft: {
+                            50: '#F5F6F8',
+                            100: '#EAECEF',
+                            200: '#E2E5E9',
+                            300: '#D1D5DB',
+                            400: '#9CA3AF',
+                            500: '#6B7280',
+                            600: '#4B5563',
+                            700: '#374151',
+                            800: '#1F2937',
+                            900: '#111827',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(31, 41, 55, 0.06)',
+                        'soft-lg': '0 20px 50px -12px rgba(31, 41, 55, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS untuk Animasi Halus, Glassmorphism, & Transisi -->
+    <style>
+        body {
+            background-color: #F5F6F8;
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Header */
+        .glass-nav {
+            background: rgba(245, 246, 248, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(209, 213, 219, 0.6);
+        }
+
+        /* Scroll Reveal Animation States */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-100 { transition-delay: 100ms; }
+        .reveal-delay-200 { transition-delay: 200ms; }
+        .reveal-delay-300 { transition-delay: 300ms; }
+
+        /* Typing Cursor Blink */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #6B7280;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Subtle Floating Animation for Hero Shapes */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        .animate-float {
+            animation: floatSlow 7s ease-in-out infinite;
+        }
+
+        /* Project Card Filter Transition */
+        .project-card {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.4s ease, 
+                        box-shadow 0.4s ease;
+        }
+
+        .project-card.hide {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+            position: absolute;
+            visibility: hidden;
+        }
+
+        /* Custom Scrollbar Soft Gray */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F3F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CED4DA;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ADB5BD;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-graysoft-300 selection:text-graysoft-900">
+
+    <!-- Indikator Scroll Progress di Paling Atas -->
+    <div class="fixed top-0 left-0 w-full h-1 z-50 bg-transparent">
+        <div id="scroll-progress" class="h-full bg-graysoft-800 w-0 transition-all duration-100 ease-out"></div>
+    </div>
+
+    <!-- ==========================================
+         1. NAVIGASI MODERN & STICKY (GLASSMORPHISM)
+    =========================================== -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-40 glass-nav transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo / Nama -->
+                <a href="#beranda" class="font-display font-bold text-xl tracking-tight text-graysoft-900 flex items-center gap-2.5 group">
+                    <span>Jaysen Ryan<span class="text-graysoft-500 font-normal">.</span></span>
+                </a>
+
+                <!-- Menu Desktop -->
+                <nav class="hidden md:flex items-center gap-7">
+                    <a href="#tentang" class="nav-link text-sm font-medium text-graysoft-600 hover:text-graysoft-900 transition-colors">Cerita</a>
+                    <a href="#pengalaman" class="nav-link text-sm font-medium text-graysoft-600 hover:text-graysoft-900 transition-colors">Jejak</a>
+                    <a href="#portofolio" class="nav-link text-sm font-medium text-graysoft-600 hover:text-graysoft-900 transition-colors">Arsip</a>
+                    <a href="#kontak" class="nav-link text-sm font-medium text-graysoft-600 hover:text-graysoft-900 transition-colors">Sapa</a>
+                    <button id="nav-copy-email-btn" type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-graysoft-800 text-graysoft-50 text-xs font-medium hover:bg-graysoft-900 transition-all shadow-sm hover:shadow active:scale-95">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                        <span id="nav-copy-label">Salin Email</span>
+                    </button>
+                </nav>
+
+                <!-- Tombol Menu Mobile (Hamburger) -->
+                <button id="mobile-menu-btn" aria-label="Buka Menu" class="md:hidden p-2.5 rounded-xl text-graysoft-700 hover:bg-graysoft-200/70 transition-colors focus:outline-none">
+                    <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dropdown Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-graysoft-50/95 backdrop-blur-lg border-b border-graysoft-200 px-5 pt-2 pb-6 space-y-2 shadow-soft">
+            <a href="#tentang" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-graysoft-700 hover:bg-graysoft-200/60 hover:text-graysoft-900 transition-colors">Cerita</a>
+            <a href="#pengalaman" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-graysoft-700 hover:bg-graysoft-200/60 hover:text-graysoft-900 transition-colors">Jejak</a>
+            <a href="#portofolio" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-graysoft-700 hover:bg-graysoft-200/60 hover:text-graysoft-900 transition-colors">Arsip</a>
+            <a href="#kontak" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-graysoft-700 hover:bg-graysoft-200/60 hover:text-graysoft-900 transition-colors">Sapa</a>
+            <div class="pt-2">
+                <button id="mobile-copy-email-btn" type="button" class="w-full text-center px-5 py-3 rounded-xl bg-graysoft-900 text-graysoft-50 text-sm font-medium hover:bg-graysoft-800 transition-colors">
+                    Salin Email (seanjaysen02@gmail.com)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ==========================================
+             2. HERO SECTION INTERAKTIF (TANPA BADGE KERJA)
+        =========================================== -->
+        <section id="beranda" class="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+            <!-- Elemen Dekoratif Geometris Lembut (Merespons Gerakan Kursor) -->
+            <div id="hero-parallax-container" class="absolute inset-0 pointer-events-none overflow-hidden">
+                <div data-speed="0.03" class="parallax-el absolute top-24 right-[10%] w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-graysoft-200/70 blur-3xl"></div>
+                <div data-speed="-0.04" class="parallax-el absolute bottom-16 left-[5%] w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-graysoft-300/50 blur-3xl"></div>
+                
+                <!-- Bentuk Geometris Garis Halus -->
+                <div data-speed="0.06" class="parallax-el hidden lg:block absolute top-36 right-[14%] w-64 h-64 rounded-3xl border border-graysoft-300/80 bg-white/40 backdrop-blur-sm rotate-12 animate-float shadow-soft"></div>
+                <div data-speed="-0.05" class="parallax-el hidden lg:block absolute bottom-32 right-[24%] w-36 h-36 rounded-2xl border border-graysoft-300/90 bg-graysoft-100/80 -rotate-6"></div>
+            </div>
+
+            <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 w-full">
+                <div class="max-w-3xl">
+                    <!-- Headline Utama -->
+                    <h1 class="reveal font-display font-bold text-4xl sm:text-5xl md:text-6xl text-graysoft-900 tracking-tight leading-[1.15] mb-6">
+                        Halo, saya Jaysen Ryan.<br>
+                        <span id="typing-text" class="text-graysoft-600 font-semibold typing-cursor">Ngoding sambil dengerin musik.</span>
+                    </h1>
+
+                    <!-- Deskripsi Singkat -->
+                    <p class="reveal reveal-delay-100 text-base sm:text-lg md:text-xl text-graysoft-600 leading-relaxed max-w-2xl mb-10">
+                        Sebuah ruang kecil di internet tempat saya mendokumentasikan proses belajar, merangkai baris-baris kode, dan menapaki perjalanan menjadi seorang web developer.
+                    </p>
+
+                    <!-- Tombol CTA Interaktif -->
+                    <div class="reveal reveal-delay-200 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                        <a href="#tentang" class="group inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-graysoft-800 text-graysoft-50 font-medium text-sm sm:text-base hover:bg-graysoft-900 transition-all shadow-soft hover:shadow-soft-lg active:scale-[0.98]">
+                            <span>Baca Cerita Saya</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                        <a href="#portofolio" class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-graysoft-100 text-graysoft-800 border border-graysoft-300/80 font-medium text-sm sm:text-base hover:bg-graysoft-200/80 transition-all active:scale-[0.98]">
+                            <span>Jelajahi Arsip</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             3. CERITA DIRI & MINAT (PERSONAL STORY)
+        =========================================== -->
+        <section id="tentang" class="py-20 sm:py-28 bg-graysoft-100/70 border-y border-graysoft-200/80">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+                    
+                    <!-- Kolom Kiri (5 Kolom): Foto Profil Santai & Fakta Angka -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <!-- Kartu Foto Profil Natural & Santai -->
+                        <div class="reveal group relative rounded-3xl bg-graysoft-50 p-3.5 border border-graysoft-300/70 shadow-soft">
+                            <div class="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-graysoft-200">
+                                <!-- Ganti atribut src di bawah ini dengan foto santai milikmu (contoh: src="foto-jaysen.jpg") -->
+                                <img id="profile-photo" 
+                                     src="foto_saya.jpeg" 
+                                     onerror="this.src='foto_saya.jpeg'"
+                                     alt="Foto santai" 
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                
+                                <!-- Overlay halus di bagian bawah foto -->
+                                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-graysoft-900/70 via-graysoft-900/25 to-transparent p-5 text-graysoft-50">
+                                    <p class="font-display font-semibold text-base">Jaysen Ryan</p>
+                                    <p class="text-xs text-graysoft-200">Mahasiswa TRPL • Calon Web Developer</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3 Fakta Ringan / Angka Personal -->
+                        <div id="stats-section" class="reveal reveal-delay-100 grid grid-cols-3 gap-3">
+                            <div class="p-4 rounded-2xl bg-graysoft-50 border border-graysoft-300/70 text-center hover:border-graysoft-400 transition-colors">
+                                <div class="font-display font-bold text-2xl sm:text-3xl text-graysoft-900">
+                                    <span class="counter" data-target="2">0</span>+
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-graysoft-600 mt-1 leading-snug">Tahun Ngoding</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-graysoft-50 border border-graysoft-300/70 text-center hover:border-graysoft-400 transition-colors">
+                                <div class="font-display font-bold text-2xl sm:text-3xl text-graysoft-900">
+                                    <span class="counter" data-target="6">0</span>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-graysoft-600 mt-1 leading-snug">Jam Dengerin Musik/Hari</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-graysoft-50 border border-graysoft-300/70 text-center hover:border-graysoft-400 transition-colors">
+                                <div class="font-display font-bold text-2xl sm:text-3xl text-graysoft-900">
+                                    <span class="counter" data-target="8">0</span>+
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-graysoft-600 mt-1 leading-snug">Jam Tidur/Hari</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kolom Kanan (7 Kolom): Cerita Utama & 6 Topik Favorit -->
+                    <div class="lg:col-span-7 space-y-8">
+                        <div class="space-y-5">
+                            <div class="reveal">
+                                <span class="text-xs font-semibold uppercase tracking-widest text-graysoft-500">Cerita Diri</span>
+                                <h2 class="font-display font-bold text-3xl sm:text-4xl text-graysoft-900 mt-2 tracking-tight">
+                                    Bertumbuh lewat baris kode, alunan musik, dan ritme hidup yang seimbang.
+                                </h2>
+                            </div>
+
+                            <p class="reveal reveal-delay-100 text-graysoft-600 leading-relaxed text-base">
+                                Saat ini saya adalah seorang mahasiswa yang sedang menikmati fase belajar dan mencari sebanyak mungkin pengalaman baru. Ketertarikan saya perlahan mengerucut pada dunia teknologi dan pengembangan web sebuah ruang di mana imajinasi visual dan logika bisa bertemu di satu layar yang sama.
+                            </p>
+
+                            <p class="reveal reveal-delay-200 text-graysoft-600 leading-relaxed text-base">
+                                Sehari-hari, waktu saya banyak dihabiskan di depan laptop untuk bereksperimen dengan kode sambil ditemani playlist musik favorit selama berjam-jam. Bagi saya, proses merangkai blok-blok kode hingga menjadi halaman web yang interaktif punya keseruan tersendiri, apalagi saat berhasil memecahkan masalah yang sempat bikin penasaran.
+                            </p>
+
+                            <p class="reveal reveal-delay-300 text-graysoft-600 leading-relaxed text-base">
+                                Di luar urusan layar dan baris kode, saya percaya pikiran yang jernih butuh tubuh yang bugar. Karena itu, saya rutin menyempatkan waktu untuk olahraga di gym, sesekali bermain game untuk melepas penat, dan selalu menjaga waktu tidur tetap cukup agar energi untuk belajar esok hari selalu penuh kembali.
+                            </p>
+                        </div>
+
+                        <!-- 6 Topik Favorit / Minat -->
+                        <div class="reveal reveal-delay-300 p-6 sm:p-8 rounded-3xl bg-graysoft-50 border border-graysoft-300/70 shadow-soft">
+                            <div class="flex items-center justify-between mb-5">
+                                <h3 class="font-display font-semibold text-lg text-graysoft-900">Hal yang Saya Sukai & Nikmati</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <!-- 1. Vibe coding -->
+                                <div class="group p-3.5 rounded-2xl bg-graysoft-100/80 border border-graysoft-200 hover:bg-graysoft-800 hover:border-graysoft-800 transition-all duration-300 flex items-center gap-3 cursor-default">
+                                    <span class="w-8 h-8 rounded-xl bg-graysoft-50 text-graysoft-700 group-hover:bg-graysoft-700 group-hover:text-graysoft-50 flex items-center justify-center shrink-0 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    </span>
+                                    <span class="text-sm font-medium text-graysoft-800 group-hover:text-graysoft-50 transition-colors">Vibe coding</span>
+                                </div>
+
+                                <!-- 2. Music -->
+                                <div class="group p-3.5 rounded-2xl bg-graysoft-100/80 border border-graysoft-200 hover:bg-graysoft-800 hover:border-graysoft-800 transition-all duration-300 flex items-center gap-3 cursor-default">
+                                    <span class="w-8 h-8 rounded-xl bg-graysoft-50 text-graysoft-700 group-hover:bg-graysoft-700 group-hover:text-graysoft-50 flex items-center justify-center shrink-0 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                                    </span>
+                                    <span class="text-sm font-medium text-graysoft-800 group-hover:text-graysoft-50 transition-colors">Music</span>
+                                </div>
+
+                                <!-- 3. Gym -->
+                                <div class="group p-3.5 rounded-2xl bg-graysoft-100/80 border border-graysoft-200 hover:bg-graysoft-800 hover:border-graysoft-800 transition-all duration-300 flex items-center gap-3 cursor-default">
+                                    <span class="w-8 h-8 rounded-xl bg-graysoft-50 text-graysoft-700 group-hover:bg-graysoft-700 group-hover:text-graysoft-50 flex items-center justify-center shrink-0 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                                    </span>
+                                    <span class="text-sm font-medium text-graysoft-800 group-hover:text-graysoft-50 transition-colors">Gym</span>
+                                </div>
+
+                                <!-- 4. Game -->
+                                <div class="group p-3.5 rounded-2xl bg-graysoft-100/80 border border-graysoft-200 hover:bg-graysoft-800 hover:border-graysoft-800 transition-all duration-300 flex items-center gap-3 cursor-default">
+                                    <span class="w-8 h-8 rounded-xl bg-graysoft-50 text-graysoft-700 group-hover:bg-graysoft-700 group-hover:text-graysoft-50 flex items-center justify-center shrink-0 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    </span>
+                                    <span class="text-sm font-medium text-graysoft-800 group-hover:text-graysoft-50 transition-colors">Game</span>
+                                </div>
+
+                                <!-- 5. Code Block -->
+                                <div class="group p-3.5 rounded-2xl bg-graysoft-100/80 border border-graysoft-200 hover:bg-graysoft-800 hover:border-graysoft-800 transition-all duration-300 flex items-center gap-3 cursor-default">
+                                    <span class="w-8 h-8 rounded-xl bg-graysoft-50 text-graysoft-700 group-hover:bg-graysoft-700 group-hover:text-graysoft-50 flex items-center justify-center shrink-0 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                                    </span>
+                                    <span class="text-sm font-medium text-graysoft-800 group-hover:text-graysoft-50 transition-colors">Code Block</span>
+                                </div>
+
+                                <!-- 6. Robot -->
+                                <div class="group p-3.5 rounded-2xl bg-graysoft-100/80 border border-graysoft-200 hover:bg-graysoft-800 hover:border-graysoft-800 transition-all duration-300 flex items-center gap-3 cursor-default">
+                                    <span class="w-8 h-8 rounded-xl bg-graysoft-50 text-graysoft-700 group-hover:bg-graysoft-700 group-hover:text-graysoft-50 flex items-center justify-center shrink-0 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                                    </span>
+                                    <span class="text-sm font-medium text-graysoft-800 group-hover:text-graysoft-50 transition-colors">Robot</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             4. JEJAK LANGKAH & PERJALANAN (TIMELINE)
+        =========================================== -->
+        <section id="pengalaman" class="py-20 sm:py-28">
+            <div class="max-w-4xl mx-auto px-5 sm:px-8">
+                <div class="text-center max-w-xl mx-auto mb-16 reveal">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-graysoft-500">Perjalanan & Pendidikan</span>
+                    <h2 class="font-display font-bold text-3xl sm:text-4xl text-graysoft-900 mt-2 tracking-tight">
+                        Jejak Langkah Sejauh Ini
+                    </h2>
+                    <p class="text-graysoft-600 mt-3 text-sm sm:text-base">
+                        Rangkaian fase belajar dari bangku sekolah kejuruan, pengalaman pertama di dunia industri, hingga kuliah mendalami rekayasa perangkat lunak.
+                    </p>
+                </div>
+
+                <!-- Vertical Timeline Kronologis -->
+                <div class="relative border-l-2 border-graysoft-300 ml-3 sm:ml-6 space-y-10">
+                    
+                    <!-- Item Timeline 1: 2022 - 2025 -->
+                    <div class="reveal relative pl-8 sm:pl-10 group">
+                        <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-graysoft-400 ring-4 ring-graysoft-50 group-hover:bg-graysoft-800 transition-all duration-300 group-hover:scale-125"></span>
+                        <div class="p-6 sm:p-7 rounded-2xl bg-graysoft-100/80 border border-graysoft-200/90 shadow-soft hover:bg-graysoft-50 hover:border-graysoft-400 transition-all">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                                <h3 class="font-display font-bold text-lg sm:text-xl text-graysoft-900">Awal Perkenalan dengan Dunia Kode</h3>
+                                <span class="inline-block px-3 py-1 rounded-full bg-graysoft-200/80 text-graysoft-700 font-mono text-xs font-medium w-fit">2022 – 2025</span>
+                            </div>
+                            <p class="text-sm font-medium text-graysoft-500 mb-3">SMK Negeri 2 Kuta Selatan • Jurusan Rekayasa Perangkat Lunak</p>
+                            <p class="text-sm sm:text-base text-graysoft-600 leading-relaxed">
+                                Di sinilah ketertarikan saya pada dunia teknologi mulai terbentuk. Melalui jurusan Rekayasa Perangkat Lunak, saya pertama kali berkenalan dengan logika bahasa pemrograman, pengelolaan database, serta dasar-dasar membangun sebuah website dari nol.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item Timeline 2: 2023 - 2024 -->
+                    <div class="reveal reveal-delay-100 relative pl-8 sm:pl-10 group">
+                        <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-graysoft-500 ring-4 ring-graysoft-50 group-hover:bg-graysoft-800 transition-all duration-300 group-hover:scale-125"></span>
+                        <div class="p-6 sm:p-7 rounded-2xl bg-graysoft-100/80 border border-graysoft-200/90 shadow-soft hover:bg-graysoft-50 hover:border-graysoft-400 transition-all">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                                <h3 class="font-display font-bold text-lg sm:text-xl text-graysoft-900">Langkah Pertama di Dunia Industri</h3>
+                                <span class="inline-block px-3 py-1 rounded-full bg-graysoft-200/80 text-graysoft-700 font-mono text-xs font-medium w-fit">2023 – 2024</span>
+                            </div>
+                            <p class="text-sm font-medium text-graysoft-500 mb-3">PT Benlaris • Praktek Kerja Lapangan (PKL)</p>
+                            <p class="text-sm sm:text-base text-graysoft-600 leading-relaxed">
+                                Menjalani Praktek Kerja Lapangan menjadi momen berharga saat saya pertama kali terjun langsung ke lingkungan industri. Pengalaman ini membuka sudut pandang baru tentang bagaimana ilmu yang dipelajari di sekolah diterapkan dalam ritme kerja nyata dan kolaborasi tim.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item Timeline 3: 2025 - Sekarang -->
+                    <div class="reveal reveal-delay-200 relative pl-8 sm:pl-10 group">
+                        <span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-graysoft-800 ring-4 ring-graysoft-50 transition-transform duration-300 group-hover:scale-125"></span>
+                        <div class="p-6 sm:p-7 rounded-2xl bg-graysoft-100/80 border border-graysoft-200/90 shadow-soft hover:bg-graysoft-50 hover:border-graysoft-400 transition-all">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                                <h3 class="font-display font-bold text-lg sm:text-xl text-graysoft-900">Mendalami Teknologi Rekayasa Perangkat Lunak</h3>
+                                <span class="inline-block px-3 py-1 rounded-full bg-graysoft-800 text-graysoft-50 font-mono text-xs font-medium w-fit">2025 – Sekarang</span>
+                            </div>
+                            <p class="text-sm font-medium text-graysoft-500 mb-3">Mahasiswa Politeknik Negeri Bali • Program Studi TRPL</p>
+                            <p class="text-sm sm:text-base text-graysoft-600 leading-relaxed">
+                                Melanjutkan perjalanan akademik di Politeknik Negeri Bali untuk memperdalam pemahaman tentang rekayasa perangkat lunak secara lebih terstruktur. Di fase ini, saya aktif mengeksplorasi teknologi web modern dan membangun fondasi kuat menuju karier sebagai web developer.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             5. ARSIP KARYA & EKSPLORASI PRIBADI
+        =========================================== -->
+        <section id="portofolio" class="py-20 sm:py-28 bg-graysoft-100/70 border-y border-graysoft-200/80">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8">
+                <!-- Header & Filter Kategori -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                    <div class="reveal">
+                        <span class="text-xs font-semibold uppercase tracking-widest text-graysoft-500">Arsip & Eksperimen</span>
+                        <h2 class="font-display font-bold text-3xl sm:text-4xl text-graysoft-900 mt-2 tracking-tight">
+                            Catatan & Eksplorasi Kode
+                        </h2>
+                    </div>
+
+                    <!-- Tombol Filter Kategori Interaktif -->
+                    <div class="reveal reveal-delay-100 flex flex-wrap gap-2" id="filter-buttons">
+                        <button data-filter="all" class="filter-btn active px-4 py-2 rounded-xl text-sm font-medium bg-graysoft-800 text-graysoft-50 transition-all">
+                            Semua
+                        </button>
+                        <button data-filter="web-dev" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-graysoft-50 text-graysoft-600 border border-graysoft-200 hover:bg-graysoft-200 hover:text-graysoft-900 transition-all">
+                            Web Dev
+                        </button>
+                        <button data-filter="vibe-coding" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-graysoft-50 text-graysoft-600 border border-graysoft-200 hover:bg-graysoft-200 hover:text-graysoft-900 transition-all">
+                            Vibe Coding
+                        </button>
+                        <button data-filter="eksperimen" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-graysoft-50 text-graysoft-600 border border-graysoft-200 hover:bg-graysoft-200 hover:text-graysoft-900 transition-all">
+                            Eksperimen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grid Kartu Proyek -->
+                <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-7 relative">
+                    <!-- Kartu proyek di-render dinamis melalui JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             6. RUANG SAPA & KONTAK INTERAKTIF
+        =========================================== -->
+        <section id="kontak" class="py-20 sm:py-28">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+                    
+                    <!-- Info Kontak & Salin Email Cepat -->
+                    <div class="lg:col-span-5 space-y-6 reveal">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-widest text-graysoft-500">Ruang Sapa</span>
+                            <h2 class="font-display font-bold text-3xl sm:text-4xl text-graysoft-900 mt-2 tracking-tight">
+                                Senang bisa berkenalan. Mari ngobrol santai.
+                            </h2>
+                        </div>
+                        <p class="text-graysoft-600 leading-relaxed text-base">
+                            Kalau kamu punya rekomendasi playlist musik buat ngoding, obrolan seputar kuliah TRPL dan web development, atau tips latihan di gym, jangan ragu buat menyapa.
+                        </p>
+
+                        <!-- Kartu Salin Email Cepat -->
+                        <div class="p-5 rounded-2xl bg-graysoft-100 border border-graysoft-300/70 flex items-center justify-between gap-4">
+                            <div class="overflow-hidden">
+                                <span class="text-xs text-graysoft-500 block mb-0.5">Surat Elektronik</span>
+                                <p id="email-text" class="font-mono font-medium text-graysoft-900 text-sm truncate">seanjaysen02@gmail.com</p>
+                            </div>
+                            <button id="copy-email-btn" type="button" class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-graysoft-50 text-graysoft-800 border border-graysoft-300 text-xs font-medium hover:bg-graysoft-800 hover:text-graysoft-50 hover:border-graysoft-800 transition-all active:scale-95">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                <span id="copy-btn-label">Salin</span>
+                            </button>
+                        </div>
+
+                        <!-- Tautan Media Sosial -->
+                        <div class="pt-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-graysoft-500 block mb-3">Temukan Saya di</span>
+                            <div class="flex items-center gap-3">
+                                <!-- GitHub -->
+                                <a href="https://github.com/JaysenRyanSn" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" class="w-11 h-11 rounded-xl bg-graysoft-100 border border-graysoft-200 flex items-center justify-center text-graysoft-700 hover:bg-graysoft-900 hover:text-graysoft-50 hover:border-graysoft-900 transition-all">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                                </a>
+                                <!-- Instagram -->
+                                <a href="https://instagram.com/jaysen_sn" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="w-11 h-11 rounded-xl bg-graysoft-100 border border-graysoft-200 flex items-center justify-center text-graysoft-700 hover:bg-graysoft-900 hover:text-graysoft-50 hover:border-graysoft-900 transition-all">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulir Kontak Fungsional -->
+                    <div class="lg:col-span-7 reveal reveal-delay-100">
+                        <form id="contact-form" class="space-y-4">
+                            <!-- Ganti YOUR_ACCESS_KEY_HERE dengan kunci dari email Anda -->
+                            <input type="hidden" name="access_key" value="7cb405a8-5dce-48e3-a6f1-7407d6e72258">
+                            <input type="hidden" name="subject" value="Sapaan Baru dari Website Portfolio!">
+
+                            <div>
+                                <input type="text" name="name" required placeholder="Nama kamu"
+                                    class="w-full px-4 py-3 rounded-xl bg-graysoft-50 border border-graysoft-200 text-sm focus:outline-none focus:border-graysoft-900">
+                            </div>
+                            <div>
+                                <input type="email" name="email" required placeholder="Email kamu"
+                                    class="w-full px-4 py-3 rounded-xl bg-graysoft-50 border border-graysoft-200 text-sm focus:outline-none focus:border-graysoft-900">
+                            </div>
+                            <div>
+                                <textarea name="message" rows="4" required placeholder="Tulis pesan atau sapaan..."
+                                        class="w-full px-4 py-3 rounded-xl bg-graysoft-50 border border-graysoft-200 text-sm focus:outline-none focus:border-graysoft-900"></textarea>
+                            </div>
+
+                            <button type="submit" id="submit-btn"
+                                    class="w-full py-3 px-6 rounded-xl bg-graysoft-900 text-graysoft-50 text-sm font-medium hover:bg-graysoft-800 transition-colors cursor-pointer">
+                                Kirim Sapaan
+                            </button>
+                            <p id="form-status" class="text-xs text-center text-graysoft-600 hidden"></p>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================
+         7. FOOTER MINIMALIS DENGAN TOMBOL BACK TO TOP
+    =========================================== -->
+    <footer class="bg-graysoft-100 border-t border-graysoft-200/80 py-10">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2 text-sm text-graysoft-600">
+                <span class="font-display font-bold text-graysoft-900">Jaysen Ryan.</span>
+                <span>•</span>
+                <span>Dirangkai sambil dengerin musik, &copy; <span id="current-year">2026</span>.</span>
+            </div>
+
+            <button id="back-to-top" aria-label="Kembali ke Atas" class="group inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-graysoft-50 border border-graysoft-300/80 text-xs font-medium text-graysoft-700 hover:bg-graysoft-800 hover:text-graysoft-50 hover:border-graysoft-800 transition-all">
+                <span>Kembali ke Atas</span>
+                <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                </svg>
+            </button>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         MODAL DETAIL ARSIP KARYA
+    =========================================== -->
+    <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-graysoft-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true">
+        <div id="modal-content" class="bg-graysoft-50 border border-graysoft-200 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-soft-lg transform scale-95 transition-transform duration-300">
+            <!-- Header Gambar / Ilustrasi Proyek -->
+            <div id="modal-visual" class="relative h-56 sm:h-64 bg-graysoft-200 flex items-center justify-center overflow-hidden">
+                <!-- Diisi dinamis oleh JS -->
+                <button id="close-modal-btn" aria-label="Tutup Modal" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-graysoft-50/90 backdrop-blur text-graysoft-800 hover:bg-graysoft-900 hover:text-graysoft-50 flex items-center justify-center transition-colors shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Isi Detail Proyek -->
+            <div class="p-6 sm:p-8 space-y-5">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span id="modal-category" class="px-3 py-1 rounded-full bg-graysoft-200 text-graysoft-700 text-xs font-semibold uppercase tracking-wider">Kategori</span>
+                    <span id="modal-year" class="text-xs font-mono font-medium text-graysoft-500">2026</span>
+                </div>
+
+                <h3 id="modal-title" class="font-display font-bold text-2xl sm:text-3xl text-graysoft-900">Judul Proyek</h3>
+                
+                <p id="modal-description" class="text-graysoft-600 text-sm sm:text-base leading-relaxed">
+                    Deskripsi lengkap proyek akan tampil di sini.
+                </p>
+
+                <!-- Teknologi / Tag yang Digunakan -->
+                <div>
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-graysoft-500 mb-2.5">Elemen & Catatan</h4>
+                    <div id="modal-tech" class="flex flex-wrap gap-2">
+                        <!-- Diisi dinamis oleh JS -->
+                    </div>
+                </div>
+
+                <!-- Tombol Aksi Modal -->
+                <div class="pt-4 border-t border-graysoft-200 flex flex-col sm:flex-row gap-3">
+                    <a id="modal-demo-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-graysoft-900 text-graysoft-50 text-sm font-medium hover:bg-graysoft-800 transition-colors">
+                        <span>Kunjungi Website ↗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         TOAST NOTIFICATION (FEEDBACK INTERAKTIF)
+    =========================================== -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-graysoft-900 text-graysoft-50 shadow-soft-lg text-sm font-medium">
+            <svg class="w-5 h-5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span id="toast-message">Sapaanmu berhasil terkirim!</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         JAVASCRIPT TERINTEGRASI
+    =========================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set tahun dinamis di footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            /* ---------------------------------------------------
+               1. SCROLL PROGRESS BAR & BACK TO TOP
+            --------------------------------------------------- */
+            const scrollProgress = document.getElementById('scroll-progress');
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                scrollProgress.style.width = `${scrollPercent}%`;
+            }, { passive: true });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            /* ---------------------------------------------------
+               2. MOBILE NAVIGATION MENU
+            --------------------------------------------------- */
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('menu-icon-open');
+            const iconClose = document.getElementById('menu-icon-close');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function toggleMobileMenu() {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    iconOpen.classList.add('hidden');
+                    iconClose.classList.remove('hidden');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    iconOpen.classList.remove('hidden');
+                    iconClose.classList.add('hidden');
+                }
+            }
+
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+
+            /* ---------------------------------------------------
+               3. HERO TYPING EFFECT & PARALLAX MOUSE FOLLOW
+            --------------------------------------------------- */
+            const typingElement = document.getElementById('typing-text');
+            const phrases = [
+                'Ngoding sambil dengerin musik.',
+                'Eksplorasi web development.',
+                'Vibe coding & kopi.',
+                'Mahasiswa Teknologi Rekayasa Perangkat Lunak.'
+            ];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function typeLoop() {
+                const currentPhrase = phrases[phraseIndex];
+                if (isDeleting) {
+                    typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typeSpeed = isDeleting ? 45 : 80;
+
+                if (!isDeleting && charIndex === currentPhrase.length) {
+                    typeSpeed = 2000;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    typeSpeed = 400;
+                }
+
+                setTimeout(typeLoop, typeSpeed);
+            }
+            setTimeout(typeLoop, 800);
+
+            // Parallax halus saat kursor bergerak di Hero Section
+            const heroSection = document.getElementById('beranda');
+            const parallaxEls = document.querySelectorAll('.parallax-el');
+
+            heroSection.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth / 2 - e.pageX);
+                const y = (window.innerHeight / 2 - e.pageY);
+
+                parallaxEls.forEach(el => {
+                    const speed = parseFloat(el.getAttribute('data-speed')) || 0.03;
+                    el.style.transform = `translate3d(${x * speed}px, ${y * speed}px, 0)`;
+                });
+            }, { passive: true });
+
+            /* ---------------------------------------------------
+               4. DATA & RENDER ARSIP KARYA + FILTER + MODAL
+            --------------------------------------------------- */
+            const projectsData = [
+                {
+                    id: 1,
+                    title: 'Vibe Coding Website Bersama Ekraf',
+                    category: 'vibe-coding',
+                    categoryLabel: 'Vibe Coding',
+                    year: '2026',
+                    image: 'foto_1.jpeg',
+                    summary: 'Konsep tampilan depan (front-end) website profil usaha untuk UMKM jasa jahit lokal bernama JahitSuka, dirancang agar lebih mudah dikenal secara digital.',
+                    description: 'Saat diminta memikirkan ide proyek dalam kegiatan Vibe Coding bersama Ekraf, hal pertama yang langsung terlintas di kepala saya adalah usaha jahit—kebetulan ibu saya sendiri adalah seorang penjahit. Proyek ini menjadi langkah awal kecil saya untuk membantu usaha ibu agar punya wajah digital. Meskipun saat ini baru berupa tampilan depan, saya berencana terus mengembangkannya hingga benar-benar siap digunakan secara penuh.',
+                    tech: ['JahitSuka', 'Vibe Coding', 'Front-End', 'UMKM'],
+                    demoUrl: 'https://jahitsuka2.vercel.app'
+                },
+                {
+                    id: 2,
+                    title: 'Website Penitipan Anabul - Pet Haven',
+                    category: ['web-dev', 'vibe-coding'],
+                    categoryLabel: 'Web Dev & Vibe Coding',
+                    year: '2026',
+                    image: 'foto_2.png',
+                    summary: 'Platform website penitipan hewan peliharaan (anabul) yang dikembangkan bersama tim sebagai proyek tugas akhir mata kuliah Pemrograman Web.',
+                    description: 'Bersama dua rekan satu tim, kami berdiskusi mencari ide tugas akhir Pemrograman Web yang relevan dan bermanfaat. Kami melihat layanan penitipan hewan kesayangan (anabul) memiliki kebutuhan yang tinggi namun belum banyak memiliki platform digital yang rapi. Dari sanalah Pet Haven lahir sebagai ruang kolaborasi sekaligus latihan membangun aplikasi web dari nol.',
+                    tech: ['Pet Haven', 'Web Dev', 'Vibe Coding', 'Tugas Akhir'],
+                    demoUrl: 'https://github.com/JaysenRyanSn/Pet-Haven'
+                },
+                {
+                    id: 3,
+                    title: 'Website Dealer Motor',
+                    category: 'vibe-coding',
+                    categoryLabel: 'Vibe Coding',
+                    year: '2024',
+                    image: 'foto_3.png',
+                    summary: 'Website katalog dan pendaftaran motor yang terintegrasi dengan fitur perhitungan statistika otomatis untuk tugas mata kuliah Matematika.',
+                    description: 'Proyek ini lahir dari tantangan tugas mata kuliah Matematika yang meminta kami mengimplementasikan konsep statistika ke dalam aplikasi berbasis web. Saya memadukan konsep katalog serta pendaftaran dealer motor dengan fitur pengolahan data statistika otomatis untuk menghitung nilai mean, median, dan modus dari data yang tersedia.',
+                    tech: ['Dealer Motor', 'Web Dev', 'Vibe Coding', 'Statistika'],
+                    demoUrl: 'https://github.com/JaysenRyanSn/dealer_motor'
+                }
+            ];
+
+            const projectsGrid = document.getElementById('projects-grid');
+
+           function renderProjects(filterValue = 'all') {
+                const filtered = filterValue === 'all'
+                    ? projectsData
+                    : projectsData.filter(p => Array.isArray(p.category) ? p.category.includes(filterValue) : p.category === filterValue);
+
+                projectsGrid.innerHTML = filtered.map((project) => {
+                    let linkLabel = '';
+                    if (project.demoUrl) {
+                        if (project.demoUrl.includes('github.com')) {
+                            linkLabel = 'GitHub Repo ↗';
+                        } else if (project.demoUrl.includes('vercel.app')) {
+                            linkLabel = 'Vercel App ↗';
+                        } else {
+                            linkLabel = `${project.demoUrl.replace(/^https?:\/\/(www\.)?/, '')} ↗`;
+                        }
+                    }
+
+                    return `
+                        <article data-id="${project.id}" 
+                                class="project-card group cursor-pointer rounded-3xl bg-graysoft-50 border border-graysoft-200/90 overflow-hidden hover:border-graysoft-300 hover:shadow-soft-lg transition-all duration-300 flex flex-col justify-between">
+                            <div>
+                                <div class="h-52 bg-graysoft-200/70 group-hover:bg-graysoft-200 transition-colors flex items-center justify-center relative overflow-hidden">
+                                    <img src="${project.image}" 
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x480/E2E5E9/4B5563?text=${encodeURIComponent(project.image)}'"
+                                        alt="${project.title}" 
+                                        class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
+                                    <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-graysoft-50/90 backdrop-blur-sm text-graysoft-700 text-xs font-medium border border-graysoft-200/80 shadow-sm">
+                                        ${project.categoryLabel}
+                                    </span>
+                                </div>
+
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between text-xs text-graysoft-500 mb-2">
+                                        <span class="font-mono">${project.year}</span>
+                                        <span class="group-hover:text-graysoft-900 transition-colors inline-flex items-center gap-1 font-medium">
+                                            Baca Cerita
+                                            <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <h3 class="font-display font-bold text-xl text-graysoft-900 mb-2 group-hover:text-graysoft-700 transition-colors">
+                                        ${project.title}
+                                    </h3>
+                                    <p class="text-sm text-graysoft-600 line-clamp-2 leading-relaxed">
+                                        ${project.summary}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="px-6 pb-6 pt-2 flex items-center justify-between gap-2">
+                                <div class="flex flex-wrap gap-1.5">
+                                    ${project.tech.slice(0, 3).map(t => `
+                                        <span class="px-2.5 py-1 rounded-lg bg-graysoft-100 text-graysoft-700 text-[11px] font-mono font-medium border border-graysoft-200/70">${t}</span>
+                                    `).join('')}
+                                </div>
+                                ${project.demoUrl ? `
+                                    <a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="text-xs font-medium text-graysoft-700 hover:text-graysoft-950 underline underline-offset-4 transition-colors whitespace-nowrap shrink-0">
+                                        ${linkLabel}
+                                    </a>
+                                ` : ''}
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+
+                document.querySelectorAll('.project-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const projectId = parseInt(card.getAttribute('data-id'), 10);
+                        openProjectModal(projectId);
+                    });
+                });
+            }
+
+            renderProjects();
+
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            const inactiveClass = filterBtns[1] ? filterBtns[1].className : '';
+            const activeClass = filterBtns[0] ? filterBtns[0].className : '';
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.className = inactiveClass;
+                    });
+
+                    btn.className = activeClass;
+
+                    renderProjects(btn.getAttribute('data-filter'));
+                });
+            });
+
+            /* ---------------------------------------------------
+               5. MODAL DETAIL PROYEK
+            --------------------------------------------------- */
+            const modal = document.getElementById('project-modal');
+            const modalContent = document.getElementById('modal-content');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+
+            function openProjectModal(id) {
+                const project = projectsData.find(p => p.id === id);
+                if (!project) return;
+
+                const visualContainer = document.getElementById('modal-visual');
+                const existingMedia = visualContainer.querySelector('.modal-media-wrapper');
+                if (existingMedia) existingMedia.remove();
+                
+                const mediaWrapper = document.createElement('div');
+                mediaWrapper.className = 'modal-media-wrapper w-full h-full';
+                mediaWrapper.innerHTML = `
+                    <img src="${project.image}" 
+                         onerror="this.src='https://placehold.co/800x480/E2E5E9/4B5563?text=${encodeURIComponent(project.image)}'"
+                         alt="${project.title}" 
+                         class="w-full h-full object-cover">
+                `;
+                visualContainer.insertBefore(mediaWrapper, closeModalBtn);
+
+                document.getElementById('modal-category').textContent = project.categoryLabel;
+                document.getElementById('modal-year').textContent = `Tahun ${project.year}`;
+                document.getElementById('modal-title').textContent = project.title;
+                document.getElementById('modal-description').textContent = project.description;
+                
+                document.getElementById('modal-tech').innerHTML = project.tech.map(t => `
+                    <span class="px-3 py-1.5 rounded-xl bg-graysoft-100 border border-graysoft-200 text-graysoft-800 text-xs font-mono font-medium">${t}</span>
+                `).join('');
+
+                const demoLinkEl = document.getElementById('modal-demo-link');
+                if (project.demoUrl) {
+                    demoLinkEl.href = project.demoUrl;
+                    demoLinkEl.classList.remove('hidden');
+                } else {
+                    demoLinkEl.classList.add('hidden');
+                }
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+
+                requestAnimationFrame(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                });
+            }
+
+            function closeProjectModal() {
+                modal.classList.add('opacity-0');
+                modalContent.classList.remove('scale-100');
+                modalContent.classList.add('scale-95');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+
+            closeModalBtn.addEventListener('click', closeProjectModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeProjectModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeProjectModal();
+                }
+            });
+
+            /* ---------------------------------------------------
+               6. INTERSECTION OBSERVER (SCROLL REVEAL & COUNTER)
+            --------------------------------------------------- */
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // Counter Animation untuk Statistik
+            const statsSection = document.getElementById('stats-section');
+            let countersAnimated = false;
+
+            const counterObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !countersAnimated) {
+                    countersAnimated = true;
+                    const counters = document.querySelectorAll('.counter');
+                    
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-target'), 10);
+                        const duration = 1500;
+                        const startTime = performance.now();
+
+                        function updateCounter(currentTime) {
+                            const elapsed = currentTime - startTime;
+                            const progress = Math.min(elapsed / duration, 1);
+                            const easeOut = 1 - Math.pow(1 - progress, 3);
+                            counter.textContent = Math.floor(easeOut * target);
+
+                            if (progress < 1) {
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target;
+                            }
+                        }
+                        requestAnimationFrame(updateCounter);
+                    });
+                }
+            }, { threshold: 0.4 });
+
+            if (statsSection) counterObserver.observe(statsSection);
+
+            /* ---------------------------------------------------
+               7. TOAST NOTIFICATION HELPER
+            --------------------------------------------------- */
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            let toastTimeout;
+
+            function showToast(msg) {
+                toastMessage.textContent = msg;
+                toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                }, 3500);
+            }
+
+            /* ---------------------------------------------------
+               8. SALIN EMAIL CEPAT (NAVIGASI, MOBILE, & KONTAK)
+            --------------------------------------------------- */
+            const emailText = document.getElementById('email-text').textContent.trim();
+            const copyEmailBtn = document.getElementById('copy-email-btn');
+            const copyBtnLabel = document.getElementById('copy-btn-label');
+            const navCopyEmailBtn = document.getElementById('nav-copy-email-btn');
+            const navCopyLabel = document.getElementById('nav-copy-label');
+            const mobileCopyEmailBtn = document.getElementById('mobile-copy-email-btn');
+
+            function copyEmailToClipboard() {
+                const tempInput = document.createElement('input');
+                tempInput.value = emailText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                tempInput.setSelectionRange(0, 99999);
+                
+                try {
+                    document.execCommand('copy');
+                    if (copyBtnLabel) copyBtnLabel.textContent = 'Tersalin!';
+                    if (navCopyLabel) navCopyLabel.textContent = 'Tersalin!';
+                    showToast(`Email (${emailText}) berhasil disalin!`);
+                    
+                    setTimeout(() => {
+                        if (copyBtnLabel) copyBtnLabel.textContent = 'Salin';
+                        if (navCopyLabel) navCopyLabel.textContent = 'Salin Email';
+                    }, 2200);
+                } catch (err) {
+                    showToast('Gagal menyalin email.');
+                }
+                
+                document.body.removeChild(tempInput);
+            }
+
+            if (copyEmailBtn) copyEmailBtn.addEventListener('click', copyEmailToClipboard);
+            if (navCopyEmailBtn) navCopyEmailBtn.addEventListener('click', copyEmailToClipboard);
+            if (mobileCopyEmailBtn) mobileCopyEmailBtn.addEventListener('click', () => {
+                copyEmailToClipboard();
+                if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
+            });
+
+            /* ---------------------------------------------------
+               9. VALIDASI & SIMULASI FORMULIR KONTAK
+            --------------------------------------------------- */
+            const contactForm = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const formStatus = document.getElementById('form-status');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Mengirim...';
+                    submitBtn.disabled = true;
+
+                    const formData = new FormData(contactForm);
+
+                    try {
+                        const response = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const result = await response.json();
+
+                        formStatus.classList.remove('hidden');
+                        if (result.success) {
+                            formStatus.textContent = 'Terima kasih! Sapaanmu sudah terkirim.';
+                            formStatus.className = 'text-xs text-center text-emerald-600 font-medium mt-2';
+                            contactForm.reset();
+                        } else {
+                            formStatus.textContent = 'Gagal mengirim pesan. Coba lagi nanti ya.';
+                            formStatus.className = 'text-xs text-center text-red-600 font-medium mt-2';
+                        }
+                    } catch (error) {
+                        formStatus.classList.remove('hidden');
+                        formStatus.textContent = 'Terjadi kesalahan jaringan. Periksa koneksimu.';
+                        formStatus.className = 'text-xs text-center text-red-600 font-medium mt-2';
+                    } finally {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
