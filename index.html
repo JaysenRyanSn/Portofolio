@@ -461,6 +461,9 @@
                         <button data-filter="vibe-coding" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-graysoft-50 text-graysoft-600 border border-graysoft-200 hover:bg-graysoft-200 hover:text-graysoft-900 transition-all">
                             Vibe Coding
                         </button>
+                        <button data-filter="ui-ux" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-graysoft-50 text-graysoft-600 border border-graysoft-200 hover:bg-graysoft-200 hover:text-graysoft-900 transition-all">
+                            UI UX
+                        </button>
                         <button data-filter="eksperimen" class="filter-btn px-4 py-2 rounded-xl text-sm font-medium bg-graysoft-50 text-graysoft-600 border border-graysoft-200 hover:bg-graysoft-200 hover:text-graysoft-900 transition-all">
                             Eksperimen
                         </button>
@@ -782,23 +785,75 @@
                     description: 'Proyek ini lahir dari tantangan tugas mata kuliah Matematika yang meminta kami mengimplementasikan konsep statistika ke dalam aplikasi berbasis web. Saya memadukan konsep katalog serta pendaftaran dealer motor dengan fitur pengolahan data statistika otomatis untuk menghitung nilai mean, median, dan modus dari data yang tersedia.',
                     tech: ['Dealer Motor', 'Web Dev', 'Vibe Coding', 'Statistika'],
                     demoUrl: 'https://github.com/JaysenRyanSn/dealer_motor'
+                },
+                {
+                    id: 4,
+                    title: 'Praktek Kabel LAN & Fiber Optik',
+                    category: 'eksperimen',
+                    categoryLabel: 'Eksperimen',
+                    year: '2026',
+                    image: 'foto_4.jpeg',
+                    images: ['foto_4.jpeg', 'foto_4_2.jpeg', 'foto_4_3.jpeg', 'foto_4_4.jpeg', 'foto_4_5.jpeg'],
+                    summary: 'Praktikum perakitan dan penyambungan kabel jaringan LAN (UTP) serta Fiber Optik pada mata kuliah Jaringan Komputer.',
+                    description: 'Dalam mata kuliah Jaringan Komputer, kami dituntut untuk tidak hanya memahami teori jaringan, tetapi juga terampil secara teknis di lapangan. Pada praktikum ini, saya mempelajari langsung teknik crimping susunan kabel LAN (Straight & Cross) hingga proses terminasi dan penyambungan kabel Fiber Optik agar koneksi jaringan berjalan stabil.',
+                    tech: ['Jaringan Komputer', 'Kabel LAN', 'Fiber Optik', 'Eksperimen'],
+                    demoUrl: ''
+                },
+                {
+                    id: 5,
+                    title: 'UI UX SmartLearn AI',
+                    category: 'ui-ux',
+                    categoryLabel: 'UI UX',
+                    year: '2025',
+                    image: 'foto_5.png',
+                    summary: 'Perancangan desain antarmuka dan pengalaman pengguna (UI/UX) website edukasi berbasis kecerdasan buatan untuk tugas akhir Sistem Informasi.',
+                    description: 'Sebagai proyek tugas akhir mata kuliah Sistem Informasi, kami ditantang merancang konsep platform pendidikan modern yang mengintegrasikan teknologi AI. Saya menyusun alur pengguna (user flow), wireframe, hingga prototipe interaktif SmartLearn AI agar proses belajar terasa lebih personal, terstruktur, dan mudah dipahami oleh pelajar.',
+                    tech: ['SmartLearn AI', 'UI UX', 'Figma', 'Sistem Informasi'],
+                    demoUrl: 'https://www.figma.com/proto/tG36hjsZRUQLVJMXeMwcCk/SmartLearn-AI?node-id=3-15&p=f&t=OlkEd5fOUC5NtPLu-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1'
+                },
+                {
+                    id: 6,
+                    title: 'UI UX SukaDonasi',
+                    category: 'ui-ux',
+                    categoryLabel: 'UI UX',
+                    year: '2023',
+                    image: 'foto_6.png',
+                    summary: 'Eksplorasi perdana desain antarmuka website penggalangan dana sosial menggunakan Figma untuk tugas akhir mata pelajaran Desain Perangkat Lunak.',
+                    description: 'Proyek ini merupakan langkah pertama saya saat duduk di bangku RPL dalam mengenal dan menggunakan Figma untuk merancang tampilan website. Diberi kebebasan menentukan tema untuk tugas akhir Desain Perangkat Lunak, saya merancang SukaDonasi dengan fokus pada tampilan yang bersih, informatif, dan memudahkan pengguna saat ingin berdonasi.',
+                    tech: ['SukaDonasi', 'UI UX', 'Figma', 'RPL'],
+                    demoUrl: 'https://www.figma.com/proto/fYaPqC4De2mAsXDgVUblH8/SukaDonasi?node-id=28-1088&t=l7ILxExGpasMHpaT-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=28%3A1088&show-proto-sidebar=1'
                 }
             ];
 
             const projectsGrid = document.getElementById('projects-grid');
 
            function renderProjects(filterValue = 'all') {
-                const filtered = filterValue === 'all'
-                    ? projectsData
-                    : projectsData.filter(p => Array.isArray(p.category) ? p.category.includes(filterValue) : p.category === filterValue);
+                const normalizedFilter = (filterValue || 'all').toLowerCase().trim();
 
-                projectsGrid.innerHTML = filtered.map((project) => {
+                // 1. Filter berdasarkan kategori
+                const filtered = (normalizedFilter === 'all' || normalizedFilter === 'semua')
+                    ? projectsData
+                    : projectsData.filter(p =>
+                        Array.isArray(p.category)
+                            ? p.category.includes(normalizedFilter)
+                            : p.category === normalizedFilter
+                    );
+
+                // 2. Urutkan dari tahun terbaru ke terlama (jika tahun sama, urutkan id terbaru di atas)
+                const sortedProjects = [...filtered].sort((a, b) => {
+                    const yearDiff = parseInt(b.year, 10) - parseInt(a.year, 10);
+                    return yearDiff !== 0 ? yearDiff : b.id - a.id;
+                });
+
+                projectsGrid.innerHTML = sortedProjects.map((project) => {
                     let linkLabel = '';
                     if (project.demoUrl) {
                         if (project.demoUrl.includes('github.com')) {
                             linkLabel = 'GitHub Repo ↗';
                         } else if (project.demoUrl.includes('vercel.app')) {
                             linkLabel = 'Vercel App ↗';
+                        } else if (project.demoUrl.includes('figma.com')) {
+                            linkLabel = 'Figma Prototype ↗';
                         } else {
                             linkLabel = `${project.demoUrl.replace(/^https?:\/\/(www\.)?/, '')} ↗`;
                         }
@@ -895,15 +950,64 @@
                 const existingMedia = visualContainer.querySelector('.modal-media-wrapper');
                 if (existingMedia) existingMedia.remove();
                 
+                const gallery = (Array.isArray(project.images) && project.images.length > 1)
+                    ? project.images
+                    : [project.image];
+                let currentImgIndex = 0;
+
                 const mediaWrapper = document.createElement('div');
-                mediaWrapper.className = 'modal-media-wrapper w-full h-full';
+                mediaWrapper.className = 'modal-media-wrapper w-full h-full relative group';
                 mediaWrapper.innerHTML = `
-                    <img src="${project.image}" 
-                         onerror="this.src='https://placehold.co/800x480/E2E5E9/4B5563?text=${encodeURIComponent(project.image)}'"
+                    <img id="modal-active-img" src="${gallery[0]}" 
+                         onerror="this.onerror=null; this.src='https://placehold.co/800x480/E2E5E9/4B5563?text=${encodeURIComponent(gallery[0])}'"
                          alt="${project.title}" 
-                         class="w-full h-full object-cover">
+                         class="w-full h-full object-cover transition-opacity duration-200">
+                    ${gallery.length > 1 ? `
+                        <button type="button" id="modal-prev-btn" aria-label="Foto sebelumnya"
+                                class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-graysoft-50/90 hover:bg-graysoft-50 text-graysoft-900 border border-graysoft-200/80 shadow-sm flex items-center justify-center transition-all cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <button type="button" id="modal-next-btn" aria-label="Foto berikutnya"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-graysoft-50/90 hover:bg-graysoft-50 text-graysoft-900 border border-graysoft-200/80 shadow-sm flex items-center justify-center transition-all cursor-pointer">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 px-2.5 py-1.5 rounded-full bg-graysoft-900/60 backdrop-blur-sm flex items-center gap-1.5">
+                            ${gallery.map((_, idx) => `
+                                <span data-dot="${idx}" class="modal-dot w-1.5 h-1.5 rounded-full transition-all ${idx === 0 ? 'bg-white w-3' : 'bg-white/50'}"></span>
+                            `).join('')}
+                        </div>
+                    ` : ''}
                 `;
                 visualContainer.insertBefore(mediaWrapper, closeModalBtn);
+
+                if (gallery.length > 1) {
+                    const activeImg = mediaWrapper.querySelector('#modal-active-img');
+                    const dots = mediaWrapper.querySelectorAll('.modal-dot');
+
+                    const updateGallery = (newIndex) => {
+                        currentImgIndex = (newIndex + gallery.length) % gallery.length;
+                        const nextSrc = gallery[currentImgIndex];
+                        activeImg.onerror = () => {
+                            activeImg.onerror = null;
+                            activeImg.src = `https://placehold.co/800x480/E2E5E9/4B5563?text=${encodeURIComponent(nextSrc)}`;
+                        };
+                        activeImg.src = nextSrc;
+
+                        dots.forEach((dot, i) => {
+                            dot.className = `modal-dot h-1.5 rounded-full transition-all ${i === currentImgIndex ? 'bg-white w-3' : 'bg-white/50 w-1.5'}`;
+                        });
+                    };
+
+                    mediaWrapper.querySelector('#modal-prev-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        updateGallery(currentImgIndex - 1);
+                    });
+
+                    mediaWrapper.querySelector('#modal-next-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        updateGallery(currentImgIndex + 1);
+                    });
+                }
 
                 document.getElementById('modal-category').textContent = project.categoryLabel;
                 document.getElementById('modal-year').textContent = `Tahun ${project.year}`;
